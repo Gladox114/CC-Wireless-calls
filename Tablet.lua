@@ -24,7 +24,7 @@ term.write("W: Up")
 term.setCursorPos(1,3)
 term.write("S: Down")
 term.setCursorPos(1,4)
-term.write("F: Toggle Stop/Continue")
+term.write("SPACE: Toggle Stop/Continue")
 lastMessage("<LASTMESSAGE|DEBUG>")
 
 local toggle1 = true
@@ -40,7 +40,17 @@ while true do
         elseif arg1 == "s" then
             modem.transmit(442,442,"DOWN")
             lastMessage("Send: DOWN")
-        elseif arg1 == "f" then
+        --[[elseif arg1 == "f" then
+            if toggle1 then
+                modem.transmit(442,442,"STOP")
+                lastMessage("Send: STOP")
+            else
+                modem.transmit(442,442,"CONTINUE")
+                lastMessage("Send: CONTINUE")
+            end]]
+        end
+    elseif Event_type == "key" then
+        if arg1 == 32 then
             if toggle1 then
                 modem.transmit(442,442,"STOP")
                 lastMessage("Send: STOP")
