@@ -19,24 +19,46 @@ function write(text)
     monitor.write(text)
 end
 
+local toggle1 = true
 
 while true do
-    local event, modemSide, senderChannel,
-    replyChannel, message, senderDistance = os.pullEvent("modem_message")
+    -- added the tablet feature to the server so dead players can also control that damn thing
+    -- arg1 = keynum, arg2 = key_pressed?
+    -- arg1 = modemSide, arg2 = senderChannel, arg3 = replyChannel, arg4 = message, arg5 = senderDistance
+    local Event_type, arg1, arg2, arg3, arg4, arg5 = os.pullEvent()
 
-    if message == "UP" then
-        redstone.setOutput("bottom", false)
-    elseif message == "DOWN" then
-        redstone.setOutput("bottom", true)
-    elseif message == "STOP" then
-        redstone.setOutput("left", true)
-    elseif message == "CONTINUE" then
-        redstone.setOutput("left", false)
+    if Event_type == "char" then
+        if arg1 == "w" then
+            redstone.setOutput("bottom", false)
+        elseif arg1 == "s" then
+            redstone.setOutput("bottom", true)
+        end
+    elseif Event_type == "key" then
+        if arg1 == 32 then
+            if toggle1 then
+                redstone.setOutput("left", true)
+                toggle1 = false
+            else
+                redstone.setOutput("left", false)
+                toggle1 = true
+            end
+        end
+    elseif Event_type == "modem_message" then
+
+        if arg4 == "UP" then
+            redstone.setOutput("bottom", false)
+        elseif arg4 == "DOWN" then
+            redstone.setOutput("bottom", true)
+        elseif arg4 == "STOP" then
+            redstone.setOutput("left", true)
+        elseif arg4 == "CONTINUE" then
+            redstone.setOutput("left", false)
+        end
+
+        modem.transmit(442,442,"Serv:Rec: "..arg4)
+
+        write("["..arg2.."]>>["..arg3.."]\n")
+        write("Distance: "..(arg5 or "?").."\n")
+        write("Message: "..arg4.."\n")
     end
-
-    modem.transmit(442,442,"Serv:Rec: "..message)
-
-    write("["..senderChannel.."]>>["..replyChannel.."]\n")
-    write("Distance: "..(senderDistance or "?").."\n")
-    write("Message: "..message.."\n")
 end
