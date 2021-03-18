@@ -12,21 +12,20 @@ local textPos = 1
 function write(text)
     if textPos >= y then
         monitor.scroll(1)
-        monitor.write(text)
-    else
-        textPos = textPos + 1
-        monitor.setCursorPos(1,textPos)
-        monitor.write(text)
+        --monitor.write(text)
     end
+    textPos = textPos + 1
+    monitor.setCursorPos(1,textPos)
+    monitor.write(text)
 end
 
 
 while true do
-local event, modemSide, senderChannel,
-  replyChannel, message, senderDistance = os.pullEvent("modem_message")
+    local event, modemSide, senderChannel,
+    replyChannel, message, senderDistance = os.pullEvent("modem_message")
 
 
-write("["..senderChannel.."]>>["..replyChannel.."]\n")
-write("Distance: "..(senderDistance or "?").."\n")
-write("Message: "..message.."\n")
+    write("["..senderChannel.."]>>["..replyChannel.."]\n")
+    write("Distance: "..(senderDistance or "?").."\n")
+    write("Message: "..message.."\n")
 end
