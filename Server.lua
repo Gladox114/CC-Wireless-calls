@@ -12,9 +12,9 @@ local textPos = 1
 function write(text)
     if textPos >= y then
         monitor.scroll(1)
-        --monitor.write(text)
+    else
+        textPos = textPos + 1
     end
-    textPos = textPos + 1
     monitor.setCursorPos(1,textPos)
     monitor.write(text)
 end
