@@ -24,6 +24,17 @@ while true do
     local event, modemSide, senderChannel,
     replyChannel, message, senderDistance = os.pullEvent("modem_message")
 
+    if message == "UP" then
+        redstone.setOutput("bottom", false)
+    elseif message == "DOWN" then
+        redstone.setOutput("bottom", true)
+    elseif message == "STOP" then
+        redstone.setOutput("left", true)
+    elseif message == "CONTINUE" then
+        redstone.setOutput("left", false)
+    end
+
+    modem.transmit(442,442,"Server: got the Message: "..message)
 
     write("["..senderChannel.."]>>["..replyChannel.."]\n")
     write("Distance: "..(senderDistance or "?").."\n")
