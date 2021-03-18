@@ -17,7 +17,7 @@ term.setCursorPos(1,3)
 term.write("S: Down")
 term.setCursorPos(1,4)
 term.write("F: Toggle Stop/Continue")
-
+lastMessage("test")
 
 local toggle1 = true
 
