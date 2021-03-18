@@ -34,7 +34,7 @@ while true do
         redstone.setOutput("left", false)
     end
 
-    modem.transmit(442,442,"Server: got the Message: "..message)
+    modem.transmit(442,442,"Serv:Rec: "..message)
 
     write("["..senderChannel.."]>>["..replyChannel.."]\n")
     write("Distance: "..(senderDistance or "?").."\n")

@@ -9,6 +9,14 @@ function lastMessage(text)
     term.write(text)
 end
 
+function toggle(var)
+    if var then
+        return false
+    else
+        return true
+    end
+end
+
 term.clear()
 
 term.setCursorPos(1,2)
@@ -42,6 +50,9 @@ while true do
             end
         end
     elseif Event_type == "modem_message" then
+        if arg4 == "Serv:Rec: CONTINUE" or arg4 == "Serv:Rec: STOP" then
+            toggle1 = toggle(toggle1)
+        end
         lastMessage("Mail: "..arg4)
     end
 end
